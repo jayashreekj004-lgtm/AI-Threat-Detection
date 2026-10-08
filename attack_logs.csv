@@ -1,0 +1,106 @@
+07:54:16,DDoS Attack,192.168.0.118,High,Blocked
+08:01:16,Port Scan,192.168.95.15,Medium,Blocked
+08:01:22,Port Scan,192.168.187.22,Medium,Blocked
+08:01:25,Brute Force Attack,192.168.94.30,High,Blocked
+08:01:32,Port Scan,192.168.200.137,Medium,Blocked
+16:07:35,Brute Force Attack,192.168.138.196,High,Blocked
+16:07:45,Brute Force Attack,192.168.139.98,High,Blocked
+11:59:01,Suspicious Login,192.168.110.87,Low,Blocked
+11:59:07,Port Scan,192.168.20.201,Medium,Blocked
+11:59:09,DDoS Attack,192.168.208.102,High,Blocked
+11:59:17,DDoS Attack,192.168.225.207,High,Blocked
+11:59:18,DDoS Attack,192.168.61.182,High,Blocked
+11:59:23,DDoS Attack,192.168.23.128,High,Blocked
+11:59:24,Suspicious Login,192.168.76.16,Low,Blocked
+11:59:31,Port Scan,192.168.93.43,Medium,Blocked
+11:59:38,Port Scan,192.168.24.156,Medium,Blocked
+11:59:45,Port Scan,192.168.159.34,Medium,Blocked
+14:33:50,DDoS Attack,192.168.10.141,High,Blocked
+14:34:00,Port Scan,192.168.105.119,Medium,Blocked
+14:34:07,Brute Force Attack,192.168.42.190,High,Blocked
+14:36:12,Suspicious Login,192.168.186.101,Low,Blocked
+14:45:23,Port Scan,192.168.167.95,Medium,Blocked
+14:45:30,Suspicious Login,192.168.80.200,Low,Blocked
+14:56:14,DDoS Attack,192.168.126.199,High,Blocked
+14:56:22,DDoS Attack,192.168.186.219,High,Blocked
+14:57:57,Suspicious Login,192.168.174.135,Low,Blocked
+15:00:28,Brute Force Attack,192.168.98.210,High,Blocked
+15:00:37,Brute Force Attack,192.168.195.100,High,Blocked
+15:08:35,Suspicious Login,192.168.191.189,Low,Blocked
+15:29:05,DDoS Attack,192.168.135.103,High,Blocked
+15:29:13,Brute Force Attack,192.168.111.248,High,Blocked
+15:29:16,DDoS Attack,192.168.76.34,High,Blocked
+15:29:20,DDoS Attack,192.168.54.171,High,Blocked
+15:29:24,DDoS Attack,192.168.237.180,High,Blocked
+15:29:28,DDoS Attack,192.168.134.109,High,Blocked
+15:29:35,Suspicious Login,192.168.31.165,Low,Blocked
+15:30:44,Brute Force Attack,192.168.178.160,High,Blocked
+15:48:52,Suspicious Login,192.168.93.226,Low,Blocked
+15:48:56,Port Scan,192.168.72.111,Medium,Blocked
+15:48:59,DDoS Attack,192.168.207.105,High,Blocked
+15:49:02,Suspicious Login,192.168.90.176,Low,Blocked
+15:49:06,Brute Force Attack,192.168.96.82,High,Blocked
+15:50:41,Brute Force Attack,192.168.81.3,High,Blocked
+15:55:25,Port Scan,192.168.142.179,Medium,Blocked
+15:55:32,Port Scan,192.168.36.166,Medium,Blocked
+16:03:37,DDoS Attack,192.168.102.167,High,Blocked
+16:03:41,Brute Force Attack,192.168.4.236,High,Blocked
+16:03:44,Port Scan,192.168.77.58,Medium,Blocked
+16:03:52,DDoS Attack,192.168.80.117,High,Blocked
+16:04:02,Brute Force Attack,192.168.97.164,High,Blocked
+16:04:44,DDoS Attack,192.168.143.39,High,Blocked
+10:52:24,Brute Force Attack,192.168.10.66,High,Blocked
+10:52:35,Suspicious Login,192.168.55.205,Low,Blocked
+10:52:42,DDoS Attack,192.168.28.174,High,Blocked
+10:52:59,Suspicious Login,192.168.131.229,Low,Blocked
+10:55:09,Brute Force Attack,192.168.112.197,High,Blocked
+10:55:19,Port Scan,192.168.73.11,Medium,Blocked
+10:55:19,Suspicious Login,192.168.66.42,Low,Blocked
+10:55:28,Brute Force Attack,192.168.98.138,High,Blocked
+10:55:32,Brute Force Attack,192.168.45.81,High,Blocked
+10:55:35,Brute Force Attack,192.168.219.150,High,Blocked
+10:55:39,Port Scan,192.168.142.166,Medium,Blocked
+10:55:43,Suspicious Login,192.168.56.230,Low,Blocked
+10:55:45,Port Scan,192.168.184.215,Medium,Blocked
+10:55:50,Suspicious Login,192.168.154.13,Low,Blocked
+10:55:51,DDoS Attack,192.168.7.126,High,Blocked
+10:56:01,DDoS Attack,192.168.232.5,High,Blocked
+10:57:36,DDoS Attack,192.168.97.245,High,Blocked
+10:57:45,Brute Force Attack,192.168.110.124,High,Blocked
+20:10:41,Brute Force Attack,192.168.84.171,High,Blocked
+20:10:44,DDoS Attack,192.168.249.124,High,Blocked
+20:10:48,Suspicious Login,192.168.3.42,Low,Blocked
+20:10:48,DDoS Attack,192.168.81.31,High,Blocked
+20:10:51,Brute Force Attack,192.168.255.153,High,Blocked
+20:10:55,Brute Force Attack,192.168.3.122,High,Blocked
+20:10:58,Brute Force Attack,192.168.46.230,High,Blocked
+20:10:58,Suspicious Login,192.168.161.86,Low,Blocked
+20:11:02,Port Scan,192.168.214.99,Medium,Blocked
+20:11:05,Suspicious Login,192.168.99.128,Low,Blocked
+20:11:06,DDoS Attack,192.168.78.10,High,Blocked
+20:11:09,Suspicious Login,192.168.170.23,Low,Blocked
+20:11:13,Suspicious Login,192.168.215.33,Low,Blocked
+20:11:14,Brute Force Attack,192.168.58.164,High,Blocked
+20:11:17,Suspicious Login,192.168.123.207,Low,Blocked
+20:11:20,Brute Force Attack,192.168.78.120,High,Blocked
+20:11:23,Suspicious Login,192.168.102.14,Low,Blocked
+20:11:27,Port Scan,192.168.200.40,Medium,Blocked
+20:11:29,Suspicious Login,192.168.67.231,Low,Blocked
+20:11:31,DDoS Attack,192.168.148.100,High,Blocked
+20:11:34,Port Scan,192.168.155.217,Medium,Blocked
+20:11:42,Port Scan,192.168.84.2,Medium,Blocked
+20:11:42,Brute Force Attack,192.168.3.7,High,Blocked
+20:11:51,Port Scan,192.168.141.167,Medium,Blocked
+20:11:58,DDoS Attack,192.168.186.186,High,Blocked
+14:55:24,Brute Force Attack,192.168.250.180,High,Blocked
+14:55:33,Brute Force Attack,192.168.99.194,High,Blocked
+14:55:40,Brute Force Attack,192.168.177.176,High,Blocked
+14:56:41,DDoS Attack,192.168.241.212,High,Blocked
+15:04:05,Brute Force Attack,192.168.167.243,High,Blocked
+15:04:12,Brute Force Attack,192.168.98.208,High,Blocked
+15:05:03,Brute Force Attack,192.168.154.222,High,Blocked
+21:50:00,Suspicious Login,192.168.248.149,Low,Blocked
+21:50:07,Port Scan,192.168.88.210,Medium,Blocked
+21:50:36,DDoS Attack,192.168.141.67,High,Blocked
+21:50:43,Port Scan,192.168.78.97,Medium,Blocked
+21:50:50,Brute Force Attack,192.168.125.49,High,Blocked

@@ -1,0 +1,394 @@
+import tkinter as tk
+from tkinter import ttk, messagebox
+import random
+import time
+import csv
+import threading
+import smtplib
+
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+# ------------------ Setup ------------------
+root = tk.Tk()
+root.title("AI Cyber Security Dashboard with Scan Control")
+root.geometry("900x750")
+root.withdraw() # Hide dashboard window initially
+
+# ------------------ Login Window ------------------
+
+def verify_login():
+    if username_entry.get() == "threat_admin" and password_entry.get() == "detect@2026":
+        login_window.destroy()
+        root.deiconify() # Reveal dashboard
+    else:
+        messagebox.showerror("Login Failed", "Invalid Username or Password!", parent=login_window)
+
+login_window = tk.Toplevel(root)
+login_window.title("Admin Login")
+login_window.geometry("400x350")
+login_window.configure(bg="#121629")
+login_window.resizable(False, False)
+
+tk.Label(login_window, text="🔒 Admin Verification", font=("Helvetica", 18, "bold"), fg="#FF6B6B", bg="#121629").pack(pady=30)
+
+tk.Label(login_window, text="Username:", font=("Arial", 12), fg="white", bg="#121629").pack(pady=5)
+username_entry = tk.Entry(login_window, font=("Arial", 12), width=25)
+username_entry.pack(pady=5)
+
+tk.Label(login_window, text="Password:", font=("Arial", 12), fg="white", bg="#121629").pack(pady=5)
+password_entry = tk.Entry(login_window, font=("Arial", 12), show="*", width=25)
+password_entry.pack(pady=5)
+
+login_btn = tk.Button(login_window, text="Login", font=("Arial", 12, "bold"), bg="#3498DB", fg="white", relief="flat", width=15, command=verify_login)
+login_btn.pack(pady=20)
+
+# Attack Types & Colors
+attacks = [
+    ("Brute Force Attack", "red"),
+    ("DDoS Attack", "orange"),
+    ("Port Scan", "yellow"),
+    ("Suspicious Login", "purple")
+]
+
+# Variables
+threat_count = 0
+attack_logs = []
+auto_scan_id = None
+CURRENT_RECEIVER_EMAIL = "detectionthreat69@gmail.com"
+
+# ------------------ Email Notification ------------------
+
+def send_alert_email(attack, ip, risk):
+    sender_email = "threatd80@gmail.com"
+    app_password = "knpt aiii iham roev"
+    global CURRENT_RECEIVER_EMAIL
+    receiver_email = CURRENT_RECEIVER_EMAIL
+
+    try:
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+        server.login(sender_email, app_password)
+
+        subject = f"🚨 Security Alert: {risk} Risk Threat Detected!"
+        body = f"Threat Details:\n\nAttack Type: {attack}\nSource IP: {ip}\nRisk Level: {risk}\n\nImmediate action is required."
+        message = f"Subject: {subject}\n\n{body}"
+
+        server.sendmail(sender_email, receiver_email, message.encode('utf-8'))
+        server.quit()
+        print(f"✅ Alert email sent successfully for {attack} from {ip}")
+    except Exception as e:
+        print(f"❌ Failed to send email: {e}")
+
+# ------------------ Risk Level ------------------
+
+def get_risk(attack):
+
+    if attack == "DDoS Attack":
+        return "High"
+
+    elif attack == "Brute Force Attack":
+        return "High"
+
+    elif attack == "Port Scan":
+        return "Medium"
+
+    else:
+        return "Low"
+
+# ------------------ CSV Save ------------------
+
+def save_to_csv(data):
+
+    with open("attack_logs.csv","a",newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(data)
+
+# ------------------ Graph Update ------------------
+
+def update_graph():
+
+    attack_types = [log[1] for log in attack_logs]
+
+    counts = {
+        "Brute Force Attack": attack_types.count("Brute Force Attack"),
+        "DDoS Attack": attack_types.count("DDoS Attack"),
+        "Port Scan": attack_types.count("Port Scan"),
+        "Suspicious Login": attack_types.count("Suspicious Login")
+    }
+
+    ax.clear()
+    colors = ["#E74C3C", "#E67E22", "#F1C40F", "#9B59B6"]
+    ax.bar(counts.keys(), counts.values(), color=colors)
+    ax.set_title("Attack Distribution", color="white")
+    ax.tick_params(colors="white")
+    for spine in ax.spines.values():
+        spine.set_color('white')
+    canvas.draw()
+
+# ------------------ Cloud Activity Simulation ------------------
+
+def cloud_log_simulation():
+
+    activity = [
+        "User login attempt",
+        "API request received",
+        "Database access",
+        "File upload request",
+        "Unknown IP connection"
+    ]
+
+    log = random.choice(activity)
+
+    log_box.insert(tk.END, f"{time.strftime('%H:%M:%S')} - {log}\n")
+
+    log_box.see(tk.END)
+
+    root.after(4000, cloud_log_simulation)
+
+# ------------------ Email Threat Analyser Simulation ------------------
+
+def email_threat_simulation():
+
+    emails = [
+        "Clean email received from HR",
+        "⚠️ Phishing link detected and blocked",
+        "Scanning attachment: invoice.pdf - Clean",
+        "🚨 Malware attachment blocked: payload.exe",
+        "Suspicious login attempt via email link - Flagged",
+        "Normal newsletter received"
+    ]
+
+    log = random.choice(emails)
+
+    email_log_box.insert(tk.END, f"{time.strftime('%H:%M:%S')} - {log}\n")
+
+    email_log_box.see(tk.END)
+
+    root.after(5000, email_threat_simulation)
+
+# ------------------ Functions ------------------
+
+def add_threat():
+
+    global threat_count
+
+    attack, color = random.choice(attacks)
+
+    ip = f"192.168.{random.randint(0,255)}.{random.randint(1,254)}"
+
+    time_now = time.strftime("%H:%M:%S")
+
+    risk = get_risk(attack)
+
+    threat_count += 1
+
+    counter_label.config(text=f"Total Threats Detected : {threat_count}")
+
+    log_entry = [time_now, attack, ip, risk, "Blocked"]
+
+    attack_logs.append(log_entry)
+
+    tree.insert("", tk.END, values=log_entry, tags=(color,))
+
+    save_to_csv(log_entry)
+
+    update_graph()
+
+    alert_label.config(text=f"⚠ ALERT: {attack} detected from {ip}")
+    
+    # Send email notification automatically
+    threading.Thread(target=send_alert_email, args=(attack, ip, risk), daemon=True).start()
+    
+    messagebox.showwarning("⚠ Threat Detected", f"{attack} detected from {ip}")
+
+# View selected threat
+def view_threat():
+
+    selected_item = tree.focus()
+
+    if selected_item:
+
+        data = tree.item(selected_item)['values']
+
+        detail_window = tk.Toplevel(root)
+
+        detail_window.title("Attack Details")
+
+        detail_window.geometry("400x250")
+
+        tk.Label(detail_window,text="Threat Details",font=("Arial",14,"bold")).pack(pady=10)
+
+        tk.Label(detail_window,text=f"Time: {data[0]}",font=("Arial",12)).pack(pady=5)
+        tk.Label(detail_window,text=f"Attack Type: {data[1]}",font=("Arial",12)).pack(pady=5)
+        tk.Label(detail_window,text=f"Source IP: {data[2]}",font=("Arial",12)).pack(pady=5)
+        tk.Label(detail_window,text=f"Risk Level: {data[3]}",font=("Arial",12)).pack(pady=5)
+        tk.Label(detail_window,text=f"Status: {data[4]}",font=("Arial",12)).pack(pady=5)
+
+# Auto Scan
+def auto_scan():
+
+    global auto_scan_id
+
+    add_threat()
+
+    auto_scan_id = root.after(5000, auto_scan)
+
+# Stop Auto Scan
+def stop_auto_scan():
+
+    global auto_scan_id
+
+    if auto_scan_id is not None:
+
+        root.after_cancel(auto_scan_id)
+
+        auto_scan_id = None
+
+        messagebox.showinfo("Scan Stopped","Auto Scan has been stopped.")
+
+# Isolate System
+def isolate_system():
+
+    log_box.insert(tk.END, f"{time.strftime('%H:%M:%S')} - 🔒 CRITICAL: System Isolated from external networks\n")
+    log_box.see(tk.END)
+    status_label.config(text="System Status: ISOLATED", fg="#E74C3C")
+    messagebox.showwarning("System Isolated", "The system has been successfully isolated to prevent further threat spread.")
+
+# Update Firewall
+def update_firewall():
+
+    selected_item = tree.focus()
+
+    if selected_item:
+        data = tree.item(selected_item)['values']
+        ip = data[2]
+        log_box.insert(tk.END, f"{time.strftime('%H:%M:%S')} - 🛡️ Firewall Rule Added: Blocked traffic from {ip}\n")
+        log_box.see(tk.END)
+        messagebox.showinfo("Firewall Updated", f"Firewall rules dynamically updated to block malicious IP:\n{ip}")
+    else:
+        log_box.insert(tk.END, f"{time.strftime('%H:%M:%S')} - 🛡️ Firewall definitions updated to latest threat signatures\n")
+        log_box.see(tk.END)
+        messagebox.showinfo("Firewall Updated", "Firewall definitions updated to latest threat signatures.")
+
+# ------------------ GUI ------------------
+BG_COLOR = "#121629" # Dark midnight blue from screenshot
+TEXT_COLOR = "white"
+
+root.configure(bg=BG_COLOR)
+
+title = tk.Label(root,text="AI Cyber Security Dashboard",font=("Helvetica",20,"bold"),fg="#FF6B6B", bg=BG_COLOR)
+title.pack(pady=10)
+
+status_label = tk.Label(root,text="System Status: Monitoring...",font=("Arial",14,"bold"),fg="#2ECC71", bg=BG_COLOR)
+status_label.pack(pady=5)
+
+counter_label = tk.Label(root,text="Total Threats Detected : 0",font=("Arial",14,"bold"), fg=TEXT_COLOR, bg=BG_COLOR)
+counter_label.pack(pady=5)
+
+# Admin Alert Label
+alert_label = tk.Label(root,text="",font=("Arial",12,"bold"),fg="#E74C3C", bg=BG_COLOR)
+alert_label.pack(pady=5)
+
+# Email Settings Panel
+email_frame = tk.Frame(root, bg=BG_COLOR)
+email_frame.pack(pady=5)
+
+tk.Label(email_frame, text="Alert Recipient Email:", font=("Arial", 12, "bold"), fg="white", bg=BG_COLOR).grid(row=0, column=0, padx=5)
+recipient_email_entry = tk.Entry(email_frame, font=("Arial", 12), width=30)
+recipient_email_entry.insert(0, CURRENT_RECEIVER_EMAIL)
+recipient_email_entry.grid(row=0, column=1, padx=5)
+
+def update_receiver_email():
+    global CURRENT_RECEIVER_EMAIL
+    CURRENT_RECEIVER_EMAIL = recipient_email_entry.get()
+    messagebox.showinfo("Success", f"Alerts will now be sent to:\n{CURRENT_RECEIVER_EMAIL}", parent=root)
+
+update_email_btn = tk.Button(email_frame, text="Update Email", command=update_receiver_email, bg="#3498DB", fg="white", font=("Arial", 10, "bold"), relief="flat")
+update_email_btn.grid(row=0, column=2, padx=5)
+
+# Buttons
+btn_frame = tk.Frame(root, bg=BG_COLOR)
+btn_frame.pack(pady=10)
+
+manual_btn = tk.Button(btn_frame,text="Manual Scan",command=add_threat,bg="#E74C3C",fg="white",font=("Arial",10,"bold"),width=15, relief="flat")
+manual_btn.grid(row=0,column=0,padx=5)
+
+auto_btn = tk.Button(btn_frame,text="Start Auto Scan",command=auto_scan,bg="#2ECC71",fg="white",font=("Arial",10,"bold"),width=15, relief="flat")
+auto_btn.grid(row=0,column=1,padx=5)
+
+stop_btn = tk.Button(btn_frame,text="Stop Auto Scan",command=stop_auto_scan,bg="#E67E22",fg="white",font=("Arial",10,"bold"),width=15, relief="flat")
+stop_btn.grid(row=0,column=2,padx=5)
+
+isolate_btn = tk.Button(btn_frame,text="Isolate System",command=isolate_system,bg="#9B59B6",fg="white",font=("Arial",10,"bold"),width=15, relief="flat")
+isolate_btn.grid(row=1,column=0,padx=5,pady=10)
+
+view_btn = tk.Button(btn_frame,text="View Selected Threat",command=view_threat,bg="#3498DB",fg="white",font=("Arial",10,"bold"),width=20, relief="flat")
+view_btn.grid(row=1,column=1,padx=5,pady=10)
+
+firewall_btn = tk.Button(btn_frame,text="Update Firewall",command=update_firewall,bg="#34495E",fg="white",font=("Arial",10,"bold"),width=15, relief="flat")
+firewall_btn.grid(row=1,column=2,padx=5,pady=10)
+
+main_frame = tk.Frame(root, bg=BG_COLOR)
+main_frame.pack(fill="both", expand=True)
+
+left_frame = tk.Frame(main_frame, bg=BG_COLOR)
+left_frame.pack(side="left", padx=20)
+
+right_frame = tk.Frame(main_frame, bg=BG_COLOR)
+right_frame.pack(side="right", padx=20)
+
+# ------------------ Table ------------------
+
+columns = ("Time","Attack Type","Source IP","Risk Level","Status")
+
+tree = ttk.Treeview(root,columns=columns,show="headings",height=10)
+scrollbar = ttk.Scrollbar(root, orient="vertical", command=tree.yview)
+
+tree.configure(yscrollcommand=scrollbar.set)
+
+scrollbar.pack(side="right", fill="y")
+for col in columns:
+    tree.heading(col,text=col)
+    tree.column(col,width=160)
+
+tree.tag_configure("red",background="#FF9999")
+tree.tag_configure("orange",background="#FFCC99")
+tree.tag_configure("yellow",background="#FFFF99")
+tree.tag_configure("purple",background="#D1C4E9")
+
+tree.pack(in_=right_frame, pady=20)
+
+# ------------------ Graph ------------------
+
+fig = Figure(figsize=(5,3), facecolor=BG_COLOR)
+ax = fig.add_subplot(111)
+ax.set_facecolor(BG_COLOR)
+ax.tick_params(colors='white')
+for spine in ax.spines.values():
+    spine.set_color('white')
+
+canvas = FigureCanvasTkAgg(fig,master=left_frame)
+canvas.get_tk_widget().pack()
+
+# ------------------ Cloud Logs ------------------
+
+tk.Label(root,text="Cloud Infrastructure Activity Logs",font=("Arial",11,"bold"), bg=BG_COLOR, fg="#89B4FA").pack(pady=5)
+
+log_box = tk.Text(root,height=6,width=90, bg="#070b14", fg="#A6ACCD", insertbackground="white", relief="flat", font=("Courier", 10))
+log_box.pack(pady=5)
+
+cloud_log_simulation()
+
+# ------------------ Email Logs ------------------
+
+tk.Label(root,text="Email Threat Analyzer Activity Logs",font=("Arial",11,"bold"), bg=BG_COLOR, fg="#89B4FA").pack(pady=5)
+
+email_log_box = tk.Text(root,height=6,width=90, bg="#070b14", fg="#A6ACCD", insertbackground="white", relief="flat", font=("Courier", 10))
+email_log_box.pack(pady=5)
+
+email_threat_simulation()
+
+# ------------------ Start GUI ------------------
+
+root.mainloop()
